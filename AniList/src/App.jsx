@@ -2,16 +2,35 @@ import React, { useEffect, useState } from "react";
 import "./components/style.css";
 import Animelist from "./components/Animelist";
 import Animeinfo from "./components/AnimeInfo";
+import AddToList from "./components/AddToList";
+import RemoveFromList from "./components/RemoveFromList";
 
 const App = () => {
-  const { search, setSearch } = useState("Naruto");
+  const [search, setSearch] = useState("");
   const [animeData, setAnimeData] = useState([]);
   const [animeInfo, setAnimeInfo] = useState([]);
+  const [myAnimeList, setMyAnimeList] = useState([]);
+
+  const removeFrom=(anime) => {
+    const newArray=myAnimeList.filter((myanime) => {
+      return myanime.mal_id !== anime.mal_id;
+    });
+    setMyAnimeList(newArray);
+  }
+
+  const addTo=(anime) => {
+    const alreadyAdded=myAnimeList.findIndex((myanime) => {
+      return myanime.mal_id === anime.mal_id;
+    });
+    if(alreadyAdded !== -1) return;
+    const newArray=[...myAnimeList, anime]
+    setMyAnimeList(newArray);
+  }
 
   useEffect(() => {
     const fetchAnime = async () => {
       const response = await fetch(
-        `https://api.jikan.moe/v4/top/anime?type=ova`,
+        `https://api.jikan.moe/v4/anime?query=${search}`,
       );
       const data = await response.json();
       setAnimeData(data.data);
@@ -40,8 +59,21 @@ const App = () => {
         <div className="anime-row">
           <h2 className="text-heading">Anime</h2>
           <div className="row">
-            <Animelist animelist={animeData}
-            setAnimeInfo={setAnimeInfo} />
+            <Animelist
+              animelist={animeData}
+              setAnimeInfo={setAnimeInfo}
+              animeComponent={AddToList}
+              handleList={(anime) => addTo(anime)}
+            />
+          </div>
+          <h2 className="text-heading">My List</h2>
+          <div className="row">
+            <Animelist
+              animelist={myAnimeList}
+              setAnimeInfo={setAnimeInfo}
+              animeComponent={RemoveFromList}
+              handleList={(anime) => removeFrom(anime)}
+            />
           </div>
         </div>
       </div>
