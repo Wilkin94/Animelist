@@ -1,9 +1,13 @@
 import React from "react";
 
 const AnimeInfo = (props) => {
+  // Guard clause for the main object
+  if (!props.animeInfo) return null;
+
+  // Destructure with a default empty object for images to prevent "undefined" errors
   const {
     title,
-    images: { jpg: { large_image_url } },
+    images = {},
     source,
     rank,
     score,
@@ -14,15 +18,15 @@ const AnimeInfo = (props) => {
     duration,
   } = props.animeInfo;
 
+  // Use optional chaining to safely access the nested image URL
+  const imageUrl = images.jpg?.large_image_url;
+
   return (
     <>
       <div className="anime-content">
         <h3>{title}</h3>
         <br />
-        <img
-          src={large_image_url}
-          alt="animeImage"
-        />
+        <img src={imageUrl} alt="animeImage" />
         <br />
         <br />
         <div className="info">
