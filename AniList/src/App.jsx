@@ -27,16 +27,20 @@ const App = () => {
     setMyAnimeList(newArray);
   }
 
-  useEffect(() => {
-    const fetchAnime = async () => {
+ const handleSearch = async () => {
+    if (!search) return;
+    try {
       const response = await fetch(
-        `https://api.jikan.moe/v4/anime?query=${search}`,
+        `https://api.jikan.moe/v4/anime?q=${search}&sfw`,
       );
       const data = await response.json();
-      setAnimeData(data.data);
-    };
-    fetchAnime();
-  }, [search]);
+      console.log('API Response:', data);
+      setAnimeData(data.data || []);
+    } catch (error) {
+      console.error('Error fetching anime:', error);
+      setAnimeData([]);
+    }
+  };
 
   return (
     <>
@@ -49,6 +53,7 @@ const App = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+          <button className="search-button" onClick={handleSearch}>Search</button>
         </div>
       </div>
 
