@@ -1,179 +1,251 @@
 @import url('https://fonts.googleapis.com/css2?family=SN+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+/* ========================================
+   RESET
+======================================== */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
   font-family: "SN Pro", sans-serif;
 }
 
-body {
-  background-color: #f0f0f0;
-  color: #333;
+/* ========================================
+   ROOT LAYOUT (STICKY FOOTER)
+======================================== */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
+/* ========================================
+   HEADER
+======================================== */
 .header {
-    width: 100%;
-    height: 80px;
-  background-color: orange;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    position: relative;
-    top: 0;
-    color: black;
-    z-index: 12;
+  background: #111;
+  color: white;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.header .search-box input {
-    outline: none;
-    border: none;
-    width: 350px;
-    height: 30px;
-    font-size: 1.2rem;
-    padding: 0 10px;
-    border-radius: 20px;
+.header h1 {
+  font-size: 1.8rem;
 }
 
+/* search */
+.search-box input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: none;
+  font-size: 16px;
+}
+
+/* ========================================
+   MAIN CONTAINER
+======================================== */
 .container {
-    width: 100%;
-    display: flex;
-    margin: 100px auto;
+  flex: 1; /* ⭐ pushes footer down */
+  padding: 20px;
 }
 
-.animeInfo {
-    width: 320px;
-    height: 100%;
-    background-color: #f9f6ee;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 11;
+/* ========================================
+   SECTION HEADINGS
+======================================== */
+.text-heading {
+  margin: 24px 0 12px;
 }
 
-.anime-row {
-    display: flex;
-    flex-direction: column;
+/* ========================================
+   ANIME GRID
+======================================== */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
 }
 
-.anime-row .row {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-left: 20rem;
-}
-
-.anime-row .text-heading {
-    margin-left: 20rem; ;
-    margin-top: 1rem;
-}
-
+/* card */
 .card {
-    width: 230px;
-    height: 300px;
-    padding: 0 0 1rem 0;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    overflow: hidden;
-    position: relative;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-4px);
 }
 
 .card img {
-    width: 100%;
-    height: 80%;
-    object-fit: cover;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
 }
 
-.anime-content {
-    padding: 40px;
-    padding-top: 200px;
-    margin: 80px 0;
-}
-
-.anime-content img {
-    width: 150px;
+/* ========================================
+   CARD INFO OVERLAY
+======================================== */
+.anime-info {
+  padding: 10px;
 }
 
 .overlay {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    padding: 1rem;
-    background-color: rgba(212, 187, 163, 0.9);
-    border-radius: 10rem 3rem 0 0;
-    text-align: justify;
-    opacity: 0;
-    transition: all 0.5s ease;
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  padding: 12px;
+  overflow-y: auto;
 }
 
-.anime-info:hover .overlay {
-    opacity: 1;
-    height: 90%;
+.card:hover .overlay {
+  opacity: 1;
 }
 
-.overlay .synopsis {
-    width: 80%;
-    height: 50%;
-    margin: 0 auto;
-    padding: 1rem;
-    overflow: auto;
+.synopsis {
+  max-height: 120px;
+  overflow-y: auto;
 }
 
-.mylist {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    padding: 0.5rem;
-    background-color: orange;
-    font-size: 1rem;
-    font-weight: bold;
+/* ========================================
+   ANIME INFO PANEL
+======================================== */
+.animeInfo {
+  margin-bottom: 24px;
 }
 
-.search-button {
-    border-radius: 20px;
-    padding: 0.2rem 1rem;
-    background-color: orange;
-    font-size: 1rem;
-    font-weight: bold;
+.anime-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #f5f5f5;
+  padding: 16px;
+  border-radius: 12px;
+  max-width: 100%;
 }
 
+/* image */
+.anime-content img {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  border-radius: 10px;
+  align-self: center;
+}
+
+/* info text */
+.anime-content .info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ========================================
+   FOOTER
+======================================== */
 .footer {
-  margin-top: 40px;
-  background-color: orange;
-  color: black;
-  padding: 15px 0;
+  background: #111;
+  color: white;
+  padding: 24px;
   text-align: center;
+  margin-top: auto;
 }
 
-.footer-content {
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer-row h3 {
+  margin-bottom: 10px;
+}
+
+/* ========================================
+   📱 TABLET (768px+)
+======================================== */
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .search-box input {
+    width: 280px;
+  }
+
+  .row {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  /* anime info side-by-side */
+  .anime-content {
+    flex-direction: row;
+    align-items: stretch;
+    padding: 20px;
+  }
+
+  .anime-content .info {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 90%;
-  margin: auto;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.footer-links {
-  display: flex;
-  gap: 15px;
-}
+  .anime-content img {
+    width: 220px;
+    object-fit: cover;
+    align-self: stretch;
+  }
 
-.footer-links a {
-  text-decoration: none;
-  color: black;
-  font-weight: 500;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  .footer-content {
-    flex-direction: column;
-    gap: 10px;
+  .anime-content .info {
+    flex: 1;
+    padding-left: 20px;
+    justify-content: center;
   }
 }
 
+/* ========================================
+   🖥️ DESKTOP (1024px+)
+======================================== */
+@media (min-width: 1024px) {
+  .container {
+    padding: 32px 48px;
+  }
 
+  .row {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+  .card img {
+    height: 300px;
+  }
+
+  .anime-content {
+    max-width: 900px;
+    margin: 0 auto 32px auto;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .anime-content img {
+    width: 260px;
+  }
+
+  .footer {
+    padding: 32px;
+  }
+}
